@@ -1,0 +1,135 @@
+﻿<Window x:Class="MagicalBaba.Desktop.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:viewModel="clr-namespace:MagicalBaba.Desktop.ViewModel"
+        xmlns:converters="clr-namespace:MagicalBaba.Desktop.Converters"
+        xmlns:desktop="clr-namespace:MagicalBaba.Desktop"
+        Title="Magical Baba - by Imperishable" SizeToContent="Height" Width="1000" Background="Silver" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <viewModel:MainWindowViewModel x:Key="MainWindowViewModel"/>
+        <converters:CommunicationTypeToEnableConverter x:Key="CommunicationTypeToEnableConverter"/>
+        <Style TargetType="{x:Type TextBlock}" x:Key="BalloonStyle">
+            <Style.Setters>
+                <Setter Property="FontFamily" Value="Bodoni MT"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="Foreground" Value="AntiqueWhite"/>
+            </Style.Setters>
+        </Style>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:BooleanToInverseVisibilityConverter x:Key="BooleanToInverseVisibilityConverter"/>
+        <Storyboard x:Key="SleepingAnimation" RepeatBehavior="Forever" AutoReverse="True">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:2" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+                <EasingDoubleKeyFrame KeyTime="0:0:2" Value="-50"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <DataTemplate DataType="{x:Type desktop:Dialog}">
+            <DockPanel x:Name="DialogContainer" Margin="0,10,0,0">
+                <Image DockPanel.Dock="Left" x:Name="Avatar" Width="50" Height="50" Stretch="Uniform" Margin="10,10,10,0"/>
+                <Grid DockPanel.Dock="Left" Width="400" Height="60">
+                    <Image Stretch="Fill" x:Name="BalloonImage"/>
+                    <TextBlock TextAlignment="Center" VerticalAlignment="Center" Width="360" MaxHeight="50" TextWrapping="Wrap" Text="{Binding Text}" Style="{StaticResource BalloonStyle}"/>
+                </Grid>
+            </DockPanel>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding Owner}" Value="User">
+                    <Setter TargetName="BalloonImage" Property="Source" Value="../Images/baloon1.png"/>
+                    <Setter TargetName="DialogContainer" Property="HorizontalAlignment" Value="Left"/>
+                    <Setter TargetName="Avatar" Property="Source" Value="../Images/userAvatar.png"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Owner}" Value="Baba">
+                    <Setter TargetName="BalloonImage" Property="Source" Value="../Images/baloon2.png"/>
+                    <Setter TargetName="DialogContainer" Property="HorizontalAlignment" Value="Right"/>
+                    <Setter TargetName="Avatar" Property="Source" Value="../Images/babaAvatar.png"/>
+                    <Setter TargetName="Avatar" Property="DockPanel.Dock" Value="Right"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource MainWindowViewModel}">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="BabaScenery">
+            <Image Source="../Images/beach.png" Width="400" Height="400" Stretch="UniformToFill"></Image>
+            <Image VerticalAlignment="Bottom" x:Name="SleepingBaba" Height="400" Width="400" Visibility="Collapsed" Source="../Images/babasleeping.png" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentCommunicationType}" Value="NotStarted">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard x:Name="SleepingAnimationSB" Storyboard="{StaticResource SleepingAnimation}"/>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <StopStoryboard BeginStoryboardName="SleepingAnimationSB"/>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Image VerticalAlignment="Bottom" x:Name="AwakedBaba" Width="550" Height="350" Source="../Images/babawaked.png">
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentCommunicationType}" Value="NotStarted">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+        </Grid>
+
+
+
+        <Grid Grid.Column="1" x:Name="DialogSection" Margin="0,10,0,0" VerticalAlignment="Bottom">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ScrollViewer MaxHeight="300" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <ItemsControl ItemsSource="{Binding Dialogs}"/>
+            </ScrollViewer>
+            <Grid Grid.Row="1" x:Name="TextEntryPanel" VerticalAlignment="Bottom">
+                <StackPanel Orientation="Horizontal" x:Name="TextEntry" Margin="10">
+                    <TextBox IsEnabledChanged="TextEntryBoxEnabledChanged" IsEnabled="{Binding CurrentCommunicationType, Converter={StaticResource CommunicationTypeToEnableConverter}}" FontFamily="Verdana" FontSize="16" x:Name="TextEntryBox" Width="400" Height="40" PreviewKeyDown="TxtQuestionOnPreviewKeyDown" Text="{Binding TextEntry, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Grid Margin="10,0,0,0" Width="80" Height="40" >
+                        <Button Content="Send" Command="{Binding SendMessageCommand}" IsDefault="True"/>
+                        <Button Content="Start Again" Command="{Binding ResetCommand}">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CurrentCommunicationType}" Value="GetAnswer">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+       
+    </Grid>
+</Window>

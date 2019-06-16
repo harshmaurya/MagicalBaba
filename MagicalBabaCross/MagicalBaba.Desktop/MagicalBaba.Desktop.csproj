@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2CB80FD4-C70B-4AFC-881E-4E033C153092}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MagicalBaba.Desktop</RootNamespace>
+    <AssemblyName>MagicalBaba</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Utilities.Desktop, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\Common.Utilities.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="MvvmCross.Core, Version=5.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmCross.Core.5.1.1\lib\net45\MvvmCross.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MvvmCross.Platform, Version=5.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmCross.Platform.5.1.1\lib\net45\MvvmCross.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="MvvmCross.Platform.Wpf, Version=5.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmCross.Platform.5.1.1\lib\net45\MvvmCross.Platform.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="MvvmCross.Wpf, Version=5.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmCross.Core.5.1.1\lib\net45\MvvmCross.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Speech" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Converters\CommunicationTypeToEnableConverter.cs" />
+    <Compile Include="Converters\StringToImageSourceConverter.cs" />
+    <Compile Include="DesktopServices\ThreadingServices.cs" />
+    <Compile Include="DesktopServices\WindowsSpeechToText.cs" />
+    <Compile Include="Views\ShellWindow.xaml.cs">
+      <DependentUpon>ShellWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\ConfigurationScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="CustomViewPresenter.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BootStrapper.cs" />
+    <Compile Include="DesktopServices\ConfigurationService.cs" />
+    <Compile Include="Setup.cs" />
+    <Compile Include="Views\ConfigurationScreen.xaml.cs">
+      <DependentUpon>ConfigurationScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\ShellWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MagicalBaba.BaseLibrary\MagicalBaba.BaseLibrary.csproj">
+      <Project>{c1250816-4d8a-4379-956e-6e8934106dd7}</Project>
+      <Name>MagicalBaba.BaseLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\babasleeping.png" />
+    <Resource Include="Images\babawaked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\baloon1.png" />
+    <Resource Include="Images\baloon2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\beach.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\babaAvatar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="babawaked.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\userAvatar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\cards\2c.png" />
+    <Resource Include="Images\cards\2d.png" />
+    <Resource Include="Images\cards\2h.png" />
+    <Resource Include="Images\cards\2s.png" />
+    <Resource Include="Images\cards\3c.png" />
+    <Resource Include="Images\cards\3d.png" />
+    <Resource Include="Images\cards\3h.png" />
+    <Resource Include="Images\cards\3s.png" />
+    <Resource Include="Images\cards\4c.png" />
+    <Resource Include="Images\cards\4d.png" />
+    <Resource Include="Images\cards\4h.png" />
+    <Resource Include="Images\cards\4s.png" />
+    <Resource Include="Images\cards\5c.png" />
+    <Resource Include="Images\cards\5d.png" />
+    <Resource Include="Images\cards\5h.png" />
+    <Resource Include="Images\cards\5s.png" />
+    <Resource Include="Images\cards\6c.png" />
+    <Resource Include="Images\cards\6d.png" />
+    <Resource Include="Images\cards\6h.png" />
+    <Resource Include="Images\cards\6s.png" />
+    <Resource Include="Images\cards\7c.png" />
+    <Resource Include="Images\cards\7d.png" />
+    <Resource Include="Images\cards\7h.png" />
+    <Resource Include="Images\cards\7s.png" />
+    <Resource Include="Images\cards\8c.png" />
+    <Resource Include="Images\cards\8d.png" />
+    <Resource Include="Images\cards\8h.png" />
+    <Resource Include="Images\cards\8s.png" />
+    <Resource Include="Images\cards\9c.png" />
+    <Resource Include="Images\cards\9d.png" />
+    <Resource Include="Images\cards\9h.png" />
+    <Resource Include="Images\cards\9s.png" />
+    <Resource Include="Images\cards\ac.png" />
+    <Resource Include="Images\cards\ad.png" />
+    <Resource Include="Images\cards\ah.png" />
+    <Resource Include="Images\cards\as.png" />
+    <Resource Include="Images\cards\jc.png" />
+    <Resource Include="Images\cards\jd.png" />
+    <Resource Include="Images\cards\jh.png" />
+    <Resource Include="Images\cards\jk.png" />
+    <Resource Include="Images\cards\js.png" />
+    <Resource Include="Images\cards\kc.png" />
+    <Resource Include="Images\cards\kd.png" />
+    <Resource Include="Images\cards\kh.png" />
+    <Resource Include="Images\cards\ks.png" />
+    <Resource Include="Images\cards\qc.png" />
+    <Resource Include="Images\cards\qd.png" />
+    <Resource Include="Images\cards\qh.png" />
+    <Resource Include="Images\cards\qs.png" />
+    <Resource Include="Images\cards\tc.png" />
+    <Resource Include="Images\cards\td.png" />
+    <Resource Include="Images\cards\th.png" />
+    <Resource Include="Images\cards\ts.png" />
+    <Content Include="settings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="settings_back.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

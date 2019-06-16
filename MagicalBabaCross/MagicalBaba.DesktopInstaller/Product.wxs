@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="Magical Baba" Language="1033" Version="1.0.0.0" Manufacturer="Grey Softwares" UpgradeCode="502c7996-0f1a-482d-8e07-747252386844">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed. This install will stop." />
+		<MediaTemplate EmbedCab="yes" />
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <UIRef Id="WixUI_InstallDir" />
+  
+    <!--Specify the license agreement text to show in UI-->
+    <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
+  
+
+    <!--Verify .NET Framework 4.5 is installed-->
+    <PropertyRef Id="NETFRAMEWORK45" />
+    <Condition
+      Message="This application requires .NET Framework 4.5. Please install the .NET Framework then run this installer again.">
+      <![CDATA[Installed OR NETFRAMEWORK45]]>
+    </Condition>
+  
+    <Icon Id="appicon.ico" SourceFile="$(var.MagicalBaba.Desktop.ProjectDir)icon.ico"/>
+  
+    <Feature Id="ProductFeature" Title="GetGuid" Level="1">
+			<ComponentRef Id="ProductComponent" />
+      <ComponentRef Id="DesktopShortcut" />
+      <ComponentRef Id="UninstallShortcut" />
+		</Feature>
+
+	</Product>
+</Wix>

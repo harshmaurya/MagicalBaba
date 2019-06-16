@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <Component Id="ProductComponent" Directory="INSTALLFOLDER" Guid="162E6AB5-094A-4BB8-B00D-122A2C1C3A00">
+      <File Source="$(var.MagicalBaba.Desktop.TargetPath)" KeyPath="yes">
+        <Shortcut Id="MagicalBabaShortcut"
+                  Directory="MagicalBabaShortcuts"
+                  Name="MagicalBaba"
+                  Description="Magical Software"
+                  WorkingDirectory="INSTALLFOLDER"
+                  Advertise="yes"
+                  Icon="appicon.ico" />
+      </File>
+
+      <File Source="$(var.MagicalBaba.Desktop.TargetDir)\Common.Utilities.Desktop.dll">
+      </File>
+      <File Source="$(var.MagicalBaba.Desktop.TargetDir)\MagicalBaba.BaseLibrary.dll">
+      </File>
+      <File Source="$(var.MagicalBaba.Desktop.TargetDir)\settings.xml">
+      </File>
+      <File Source="$(var.MagicalBaba.Desktop.TargetDir)\settings_back.xml">
+      </File>
+      <RemoveFolder Id="DeleteShortcut"
+                    Directory="MagicalBabaShortcuts"
+                    On="uninstall" />
+    </Component>
+
+    <Component Id="DesktopShortcut" Guid="*" Directory="DesktopFolder">
+      <Shortcut Id="ApplicationDesktopShortcut"
+                 Name="Magical Baba"
+                 Description="Magical Baba Softwares"
+                 Target="[INSTALLFOLDER]MagicalBaba.exe"
+                 WorkingDirectory="INSTALLFOLDER"/>
+      <RemoveFolder Id="DesktopShortcut" On="uninstall"/>
+      <RegistryValue
+          Root="HKCU"
+          Key="Software/MagicalBaba"
+          Name="installed"
+          Type="integer"
+          Value="1"
+          KeyPath="yes"/>
+    </Component>
+
+    <Component Id="UninstallShortcut" Guid="*" Directory="MagicalBabaShortcuts">
+      <Shortcut Id="UninstallThisProduct"
+                Name="Uninstall MagicalBaba"
+                Description="Uninstalls the Magical Baba Application"
+                Target="[System64Folder]msiexec.exe"
+                Arguments="/x [ProductCode]" />
+      <RegistryValue Root="HKCU" Key="Software\GreySoftwares\MagicalBaba" Name="installed" Type="integer" Value="1"
+                     KeyPath="yes" />
+    </Component>
+  </Fragment>
+</Wix>

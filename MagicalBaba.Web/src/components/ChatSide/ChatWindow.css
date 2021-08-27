@@ -1,0 +1,50 @@
+  
+  .chat-window{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }  
+  
+  .user-input{
+    margin: 5%;
+    text-align: left;
+  }
+
+  .input-text{
+    width: fit-content;
+    min-width: 60%;
+    height: 10vmin;
+    font-size: 80%;
+  }
+
+  .send-button{
+    height: 10vmin;
+    font-weight: bold;
+    width: 30%;
+    color: #022e36;
+    margin-left: 2%;
+   }
+
+  .speech-bubble {
+    background: #022e36;
+    -webkit-border-radius: 4px;
+            border-radius: 4px;
+    font-size: 100%;
+    color: #efefef;
+    line-height: 2;
+    margin: 5%;
+    min-width: 60%;
+    width: fit-content;
+    padding: 2%;
+    position: relative;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    max-height: 20vh;
+  }
+  
+  .speech-bubble p {
+    margin: 0%;
+  }
+  .speech-bubble p:last-of-type {
+    margin-bottom: 0%;
+  }

@@ -13,6 +13,8 @@ function ChatWindow(props) {
     const [input, setInput] = useState('');
     const [speechSetting, setSpeechSetting] = useState(null);
     const timerInterval = 1500;
+    var synth = window.speechSynthesis;
+
     /** @type {(arg0: boolean) => void} */
     const timerTrigger = useTimeout(ShowBabaResponse, timerInterval);
 
@@ -22,11 +24,12 @@ function ChatWindow(props) {
 
     function ConfigureSpeech() {
         if (speechSetting === null) {
+            let voices = synth.getVoices();
             let speechSynth = new SpeechSynthesisUtterance();
             speechSynth.lang = "hi-IN";
-            speechSynth.rate = 0.9;
-            speechSynth.volume = 0.6;
-            speechSynth.pitch = 0.5;
+            speechSynth.rate = 1;
+            speechSynth.volume = 0.7;
+            speechSynth.voice = voices[11]
             setSpeechSetting(speechSynth);
         }
     }
